@@ -2,9 +2,10 @@ import cirg
 
 
 cirgClient = cirg.cirg("web-mbg.ru",333)
+cirgClient.clientOptions.WantConnection=0x01 # get data and close connection
 
 
-if (cirgClient.connect(3)): print("Connected!")
+if (cirgClient.connect()): print("Connected!")
 
 
 

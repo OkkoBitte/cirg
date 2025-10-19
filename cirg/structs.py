@@ -21,7 +21,7 @@ class ClientOptions:
         self.ActionFromPassivation = 0x00
         self.TimeToSleep = 0x00
         self.TypeConnection = 0x00
-        
+        self.mazor_code = mazor_code
 
         if TypeClient == "new":
             self.TypeClient = 0x01
@@ -40,15 +40,15 @@ class ClientOptions:
         if TypeConnection == "normal":
             self.TypeConnection = 0x00
         
-        
-        self.fullBytes = bytes([
+    def getFullBytes(self):
+        return bytes([
             self.TypeClient,
             self.WantConnection, 
             self.ActionFromPassivation,
             self.TimeToSleep,
             self.TypeConnection,
             0x00, 0x00, 0x00, 0x00,  
-            mazor_code & 0xFF
+            self.mazor_code & 0xFF
         ])
 
 class dalim_t:

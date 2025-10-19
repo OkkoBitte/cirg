@@ -2,23 +2,23 @@ from .structs import *
 from typing import Callable
 import socket
 class cirg:
-    def __init__(self, host: str, port: int):
+    def __init__(self, host: str, port: int, clientOptions: ClientOptions = ClientOptions()):
         self.dalib = dalim_t(
             host, 
             port, 
             lambda x: None, 
             socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         )
-        self.clientOptions: ClientOptions = ClientOptions()
+        self.clientOptions= clientOptions
         self.sey: str = generate_random_string(20)
     
-    def connect(self, how: int, timeout: int = 3) -> bool:
+    def connect(self, how: int = 1, timeout: int = 3) -> bool:
         for i in range(how):
             try:
                 self.dalib.socket.settimeout(timeout)
                 self.dalib.socket.connect((self.dalib.host, self.dalib.port))
                 if(self.clientOptions.WantConnection == 0x02): self.dalib.socket.settimeout(None)
-                data_to_send = self.clientOptions.fullBytes + self.sey.encode('utf-8')
+                data_to_send = self.clientOptions.getFullBytes() + self.sey.encode('utf-8')
                 self.dalib.socket.send(data_to_send)
                 
                 return True
